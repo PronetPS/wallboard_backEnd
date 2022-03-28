@@ -61,6 +61,71 @@ router.route('/loginUser').post((request, response) => {
 })
 
 
+router.route('/getWaitCall').get((request, response) => {
+    Db.getWaitCall().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
+
+router.route('/getMainScreenStatsV1').get((request, response) => {
+    Db.getMainScreenStatsV1().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
+
+router.route('/getMainScreenStatsV2').get((request, response) => {
+    Db.getMainScreenStatsV2().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
+
+router.route('/getSliderStat').get((request, response) => {
+    Db.getSliderStat().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
+router.route('/getTableKHI').get((request, response) => {
+    Db.getTableKHI().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
+router.route('/getTableLHR').get((request, response) => {
+    Db.getTableLHR().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+router.route('/getliloData').get((request, response) => {
+    Db.getliloData().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
 
 
 
