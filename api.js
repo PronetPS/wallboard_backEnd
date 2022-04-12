@@ -127,6 +127,16 @@ router.route('/getliloData').get((request, response) => {
 
 
 
+router.route('/getMTDSL').get((request, response) => {
+    Db.getMTDSL().then((data) => {
+        console.log(data);
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
+
 
 
 var port = process.env.PORT || 2022;

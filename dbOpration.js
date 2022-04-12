@@ -331,6 +331,31 @@ async function getliloData() {
 
 
 
+async function getMTDSL() {
+    try {
+        let pool = await sql.connect(config);
+        let MTDSL_DATA = await pool.request().query("SELECT [dbo].[get_MTDSL]() as MTDSL");
+        console.log(MTDSL_DATA.recordsets[0]);
+        var web_response = {
+            message: 'You have successfully executed the query',
+            status: true,
+            data: MTDSL_DATA.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
+
+
+
 
 module.exports = {
     getAllUser: getAllUser,
@@ -345,4 +370,5 @@ module.exports = {
     getTableKHI: getTableKHI,
     getTableLHR: getTableLHR,
     getliloData: getliloData,
+    getMTDSL: getMTDSL,
 }
