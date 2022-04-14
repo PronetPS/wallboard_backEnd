@@ -357,6 +357,37 @@ async function getMTDSL() {
 
 
 
+
+
+
+
+
+async function getAHT() {
+    try {
+        let pool = await sql.connect(config);
+        let AHT_DATA = await pool.request().query("SELECT * from AHT");
+        console.log(AHT_DATA.recordsets[0]);
+        var web_response = {
+            message: 'You have successfully executed the query',
+            status: true,
+            data: AHT_DATA.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
+
+
+
+
 module.exports = {
     getAllUser: getAllUser,
     createUser: createUser,
@@ -371,4 +402,5 @@ module.exports = {
     getTableLHR: getTableLHR,
     getliloData: getliloData,
     getMTDSL: getMTDSL,
+    getAHT: getAHT,
 }
