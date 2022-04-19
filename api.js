@@ -129,7 +129,7 @@ router.route('/getliloData').get((request, response) => {
 
 router.route('/getMTDSL').get((request, response) => {
     Db.getMTDSL().then((data) => {
-        console.log(data);m
+        console.log(data);
         // response.json(data.data[0]);
         response.json(data);
     })
