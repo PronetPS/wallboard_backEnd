@@ -2,6 +2,117 @@ var config = require('./dbConfig');
 const sql = require('mssql');
 // const { database } = require('./dbConfig');
 
+async function getAllAgentsSupervisors10Min() {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query("select * from dbo.vw_AgentStateStatus_Last10Mins ORDER BY Timestamp desc");
+        console.log(data, "*****");
+        var web_response = {
+            message: 'You have successfully got all supervisors agent within 10min',
+            status: true,
+            data: data.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
+async function getAllAgentsSupervisors() {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query("select * from dbo.vw_AgentStateStatus ORDER BY Timestamp desc");
+        console.log(data, "*****");
+        var web_response = {
+            message: 'You have successfully got all supervisors agent',
+            status: true,
+            data: data.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
+
+async function getAllSupervisors() {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query("select * from vw_allSuperviosrs order by SupervisorName");
+        // console.log(data, "*****");
+        var web_response = {
+            message: 'You have successfully got all getAllSupervisors',
+            status: true,
+            data: data.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
+async function getAllKHISupervisors() {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query("select SupervisorName,SupervisorID  from vw_KarachiSupervisors order by SupervisorName");
+        // console.log(data, "*****");
+        var web_response = {
+            message: 'You have successfully got all karachi getAllSupervisors',
+            status: true,
+            data: data.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
+async function getAllLHRSupervisors() {
+    try {
+        let pool = await sql.connect(config);
+        let data = await pool.request().query("select SupervisorName,SupervisorID  from vw_LahoreSupervisors order by SupervisorName");
+        // console.log(data, "*****");
+        var web_response = {
+            message: 'You have successfully got all lahore getAllSupervisors',
+            status: true,
+            data: data.recordsets[0]
+        }
+        return web_response;
+    }
+    catch (error) {
+        console.log(error);
+        var web_response = {
+            message: 'ERROR',
+            status: false,
+            data: error
+        }
+        return web_response;
+    }
+}
 
 async function getAllUser() {
     try {
@@ -26,8 +137,7 @@ async function getAllUser() {
     }
 }
 
-
-async function getDeleteUser({user_id}) {
+async function getDeleteUser({ user_id }) {
     try {
         console.log('op-------------------', user_id)
         let pool = await sql.connect(config);
@@ -49,12 +159,11 @@ async function getDeleteUser({user_id}) {
     }
 }
 
-
 async function loginUser(ID_Pass) {
     try {
         let pool = await sql.connect(config);
         let user = await pool.request().query(`select * FROM wb_user WHERE user_email = '${ID_Pass?.user_email}'`);
-        if(user.recordsets[0].length==0){
+        if (user.recordsets[0].length == 0) {
             var web_response = {
                 status: false,
                 message: 'User not found',
@@ -63,9 +172,9 @@ async function loginUser(ID_Pass) {
             pool.close();
             return web_response;
         }
-        else{
+        else {
             let user2 = await pool.request().query(`select * FROM wb_user WHERE user_email = '${ID_Pass?.user_email}' and user_password = '${ID_Pass?.user_password}'`);
-            if(user2.recordsets[0].length==0){
+            if (user2.recordsets[0].length == 0) {
                 var web_response = {
                     status: false,
                     message: 'Invalid Password',
@@ -74,10 +183,10 @@ async function loginUser(ID_Pass) {
                 pool.close();
                 return web_response;
             }
-            else{
+            else {
                 var web_response = {
                     status: true,
-                    message: 'User verified',   
+                    message: 'User verified',
                     data: user.recordsets[0][0]
                 }
                 pool.close();
@@ -86,7 +195,7 @@ async function loginUser(ID_Pass) {
         }
 
 
-        
+
     }
     catch (err) {
         var web_response = {
@@ -97,7 +206,6 @@ async function loginUser(ID_Pass) {
         return web_response;
     }
 }
-
 
 async function createUser(user) {
     try {
@@ -126,8 +234,6 @@ async function createUser(user) {
     }
 }
 
-
-
 async function updateUser(user) {
     try {
         // console.log('user op --------------', user)
@@ -153,8 +259,6 @@ async function updateUser(user) {
         return (web_response)
     }
 }
-
-
 
 async function getWaitCall() {
     try {
@@ -202,7 +306,6 @@ async function getMainScreenStatsV1() {
     }
 }
 
-
 async function getMainScreenStatsV2() {
     try {
         let pool = await sql.connect(config);
@@ -226,9 +329,6 @@ async function getMainScreenStatsV2() {
     }
 }
 
-
-
-
 async function getSliderStat() {
     try {
         let pool = await sql.connect(config);
@@ -251,7 +351,6 @@ async function getSliderStat() {
         return web_response;
     }
 }
-
 
 async function getTableKHI() {
     try {
@@ -277,8 +376,6 @@ async function getTableKHI() {
 }
 
 
-
-
 async function getTableLHR() {
     try {
         let pool = await sql.connect(config);
@@ -302,12 +399,11 @@ async function getTableLHR() {
     }
 }
 
-
 async function getliloData() {
     try {
         let pool = await sql.connect(config);
         let Agentloli = await pool.request().query("select * from vw_loli_agents order by Timestamp DESC");
-        console.log(Agentloli.recordsets[0]);
+        // console.log(Agentloli.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -325,15 +421,12 @@ async function getliloData() {
         return web_response;
     }
 }
-// console.log("changes")
-
-
 
 
 async function getMTDSL() {
     try {
         let pool = await sql.connect(config);
-        let MTDSL_DATA = await pool.request().query("SELECT [dbo].[get_MTDSL]() as MTDSL");
+        let MTDSL_DATA = await pool.request().query("exec sp_MTDSL");
         console.log(MTDSL_DATA.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
@@ -352,13 +445,6 @@ async function getMTDSL() {
         return web_response;
     }
 }
-
-
-
-
-
-
-
 
 
 async function getAHT() {
@@ -385,21 +471,24 @@ async function getAHT() {
 }
 
 
-
-
 module.exports = {
     getAllUser: getAllUser,
     createUser: createUser,
     loginUser: loginUser,
     getDeleteUser: getDeleteUser,
-    updateUser:updateUser,
+    updateUser: updateUser,
     getWaitCall: getWaitCall,
     getMainScreenStatsV1: getMainScreenStatsV1,
-    getMainScreenStatsV2,getMainScreenStatsV2,
+    getMainScreenStatsV2, getMainScreenStatsV2,
     getSliderStat: getSliderStat,
     getTableKHI: getTableKHI,
     getTableLHR: getTableLHR,
     getliloData: getliloData,
     getMTDSL: getMTDSL,
     getAHT: getAHT,
+    getAllAgentsSupervisors: getAllAgentsSupervisors,
+    getAllSupervisors: getAllSupervisors,
+    getAllKHISupervisors: getAllKHISupervisors,
+    getAllLHRSupervisors: getAllLHRSupervisors,
+    getAllAgentsSupervisors10Min: getAllAgentsSupervisors10Min
 }

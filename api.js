@@ -15,9 +15,55 @@ router.use((request, response, next) => {
     next();
 });
 
+//get all getAllAgentsSupervisors within 10 min
+router.route('/vw_AgentStateStatus_Last10Mins').get((request, response) => {
+    Db.getAllAgentsSupervisors10Min().then((data) => {
+        console.log(data, "*****");
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+//get all getAllAgentsSupervisors
+router.route('/getAllAgentsSupervisors').get((request, response) => {
+    Db.getAllAgentsSupervisors().then((data) => {
+        console.log(data, "*****");
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+//all supervisors
+router.route('/getAllSupervisors').get((request, response) => {
+    Db.getAllSupervisors().then((data) => {
+        // console.log(data, "*****");
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+//all karachi supervisors
+router.route('/getAllKHISupervisors').get((request, response) => {
+    Db.getAllKHISupervisors().then((data) => {
+        // console.log(data, "*****");
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+//all Lahore supervisors
+router.route('/getAllLHRSupervisors').get((request, response) => {
+    Db.getAllLHRSupervisors().then((data) => {
+        console.log(data, "*****");
+        // response.json(data.data[0]);
+        response.json(data);
+    })
+})
+
+
 router.route('/getAllUser').get((request, response) => {
     Db.getAllUser().then((data) => {
-        console.log(data);
+        // console.log(data);
         // response.json(data.data[0]);
         response.json(data);
     })
@@ -25,7 +71,7 @@ router.route('/getAllUser').get((request, response) => {
 
 router.route('/createUser').post((request, response) => {
     let user = { ...request.body }
-    console.log('api user -------------',user)
+    // console.log('api user -------------',user)
     Db.createUser(user).then(data => {
         console.log('api data ----------',data)
        response.json(data);
@@ -34,9 +80,9 @@ router.route('/createUser').post((request, response) => {
 
 router.route('/deleteUser').post((request, response) => {
     let user = { ...request.body }
-    console.log('api user -------------',user)
+    // console.log('api user -------------',user)
     Db.getDeleteUser(user).then(data => {
-        console.log('api data ----------',data) 
+        // console.log('api data ----------',data) 
        response.json(data);
     })
 })
@@ -44,9 +90,9 @@ router.route('/deleteUser').post((request, response) => {
 
 router.route('/updateUser').post((request, response) => {
     let user = { ...request.body }
-    console.log('api user -------------',user)
+    // console.log('api user -------------',user)
     Db.updateUser(user).then(data => {
-        console.log('api data ----------',data) 
+        // console.log('api data ----------',data) 
        response.json(data);
     })
 })
@@ -119,7 +165,7 @@ router.route('/getTableLHR').get((request, response) => {
 
 router.route('/getliloData').get((request, response) => {
     Db.getliloData().then((data) => {
-        console.log(data);
+        // console.log(data);
         // response.json(data.data[0]);
         response.json(data);
     })
