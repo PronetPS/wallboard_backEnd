@@ -6,7 +6,6 @@ async function getAllAgentsSupervisors10Min() {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query("select * from dbo.vw_AgentStateStatus_Last10Mins ORDER BY Timestamp desc");
-        console.log(data, "*****");
         var web_response = {
             message: 'You have successfully got all supervisors agent within 10min',
             status: true,
@@ -28,7 +27,6 @@ async function getAllAgentsSupervisors() {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query("select * from dbo.vw_AgentStateStatus ORDER BY Timestamp desc");
-        console.log(data, "*****");
         var web_response = {
             message: 'You have successfully got all supervisors agent',
             status: true,
@@ -51,7 +49,6 @@ async function getAllSupervisors() {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query("select * from vw_allSuperviosrs order by SupervisorName");
-        // console.log(data, "*****");
         var web_response = {
             message: 'You have successfully got all getAllSupervisors',
             status: true,
@@ -73,7 +70,6 @@ async function getAllKHISupervisors() {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query("select SupervisorName,SupervisorID  from vw_KarachiSupervisors order by SupervisorName");
-        // console.log(data, "*****");
         var web_response = {
             message: 'You have successfully got all karachi getAllSupervisors',
             status: true,
@@ -95,7 +91,6 @@ async function getAllLHRSupervisors() {
     try {
         let pool = await sql.connect(config);
         let data = await pool.request().query("select SupervisorName,SupervisorID  from vw_LahoreSupervisors order by SupervisorName");
-        // console.log(data, "*****");
         var web_response = {
             message: 'You have successfully got all lahore getAllSupervisors',
             status: true,
@@ -118,7 +113,6 @@ async function getAllUser() {
     try {
         let pool = await sql.connect(config);
         let allUser = await pool.request().query("select * from wb_user");
-        console.log(allUser.recordsets[0]);
         var web_response = {
             message: 'You have successfully got all users',
             status: true,
@@ -139,7 +133,6 @@ async function getAllUser() {
 
 async function getDeleteUser({ user_id }) {
     try {
-        console.log('op-------------------', user_id)
         let pool = await sql.connect(config);
         let user = await pool.request().query("DELETE FROM wb_user WHERE user_id = '" + user_id + "'");
         var web_response = {
@@ -209,7 +202,6 @@ async function loginUser(ID_Pass) {
 
 async function createUser(user) {
     try {
-        console.log('user op --------------', user)
         let pool = await sql.connect(config);
         // var insertQuery = "INSERT INTO wb_user VALUES ('" + user.user_id + "', '" + user.first_name + "', '" + user.last_name + "', '" + user.role_type + "', '" + user.user_password + "', '" + user.create_date + "');";
         let insertUser = await pool.request().query("INSERT INTO wb_user VALUES ('" + user.user_id + "', '" + user.first_name + "', '" + user.last_name + "', '" + user.role_type + "', '" + user.user_password + "', '" + user.create_date + "', '" + user.user_email + "')")
@@ -264,7 +256,6 @@ async function getWaitCall() {
     try {
         let pool = await sql.connect(config);
         let waitCall = await pool.request().query("select sum(Call_Wait) as Call_Wait FROM dbo.Skillset_Moving where Skill_ID IN('KHI_U_Bank_Acc_sk','KHI_U_Crd_Card_sk','KHI_U_Dgt_Bank_sk','KHI_U_Isl_Bank_sk','KHI_U_Lost_Stln_sk','KHI_U_P_Isl_Bank_sk','KHI_E_Crd_Card_sk','KHI_E_Dgt_Bank_sk','KHI_E_Isl_Bank_sk','KHI_E_Lost_Stln_sk','KHI_E_P_Con_Bank_sk','KHI_E_P_Isl_Bank_sk','LHR_U_Bank_Acc_sk','LHR_U_Crd_Card_sk','LHR_U_Isl_Bank_sk','LHR_U_Lost_Stln_sk','LHR_U_P_Con_Bank_sk','LHR_E_Bank_Acc_sk','LHR_E_Crd_Card_sk','LHR_E_Dgt_Bank_sk','LHR_E_Isl_Bank_sk','LHR_E_Lost_Stln_sk','LHR_E_P_Con_Bank_sk','LHR_E_P_Isl_Bank_sk','ALFA','MX_Customer_sk','Platinum_Customer_sk')");
-        console.log(waitCall.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -287,7 +278,6 @@ async function getMainScreenStatsV1() {
     try {
         let pool = await sql.connect(config);
         let mainScreenStatsv1 = await pool.request().query("select [Landed Calls] as 'LandedCalls', [Answered Calls] as 'AnsweredCalls', [Abandon Calls] as 'AbandonCalls', [Call Ans After Threshold] as 'CallsAnsAftThreshold', [service level] as 'SL' from vw_mainstats_v1");
-        console.log(mainScreenStatsv1.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -310,7 +300,6 @@ async function getMainScreenStatsV2() {
     try {
         let pool = await sql.connect(config);
         let mainScreenStatsv2 = await pool.request().query("select [LHR Total NO. Of Agents] + [KHI Total NO. Of Agents] as 'TotalAgent', [LHR Total NO. Of Agents] as 'LHRTotalAgent', [KHI Total NO. Of Agents] as 'KHITotalAgent', [LHR idle Agents] as 'LHRIdleAgent', [KHI idle Agents] as 'KHIIdleAgent', [LHR NotReady Agents] as 'LHRNotReadyAgent', [KHI NotReady Agents] as 'KHINotReadyAgent', [LHR busy Agents] as 'LHRBusyAgent', [KHI busy Agents] as 'KHIBusyAgent', [Calls Waiting In Queue] as 'WaitingInQueue', [Wait time] as 'WaitTime' from vw_mainstats_v2");
-        console.log(mainScreenStatsv2.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -333,7 +322,6 @@ async function getSliderStat() {
     try {
         let pool = await sql.connect(config);
         let SliderStat = await pool.request().query("select * from vw_slider_stat");
-        console.log(SliderStat.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -355,8 +343,7 @@ async function getSliderStat() {
 async function getTableKHI() {
     try {
         let pool = await sql.connect(config);
-        let tableKHI = await pool.request().query("select sum(QUEUED_CALL_ANS) as KHI_ANSWERED, sum(CALL_OFFERED) as KHI_OFFERED, (SELECT TOP 1 AGENT_IN_SERVICE FROM dbo.Skillset_Moving where Skill_ID IN('ALFA','Alfa_Shadow_CBA_sk','CBA_Error_sk','CBA_MX_sk','CBAKHI_Error_sk','E_Main_sk','Eng_Shadow_CBA_sk','Karachi_sk','KHI_E_Bank_Acc_sk','KHI_E_Crd_Card_sk','KHI_E_Dgt_Bank_sk','KHI_E_Isl_Bank_sk','KHI_E_Lost_Stln_sk','KHI_E_P_Con_Bank_sk','KHI_E_P_Isl_Bank_sk','KHI_E_SelfServ_Err_sk','KHI_E_SelfServ_Nrm_sk','KHI_IVR_ByPass','KHI_Lahore_OOS','KHI_U_Bank_Acc_sk','KHI_U_Crd_Card_sk','KHI_U_Dgt_Bank_sk','KHI_U_Isl_Bank_sk','KHI_U_Lost_Stln_sk','KHI_U_P_Con_Bank_sk','KHI_U_P_Isl_Bank_sk','KHI_U_SelfServ_Err_sk','KHI_U_SelfServ_Nrm_sk','MX_Customer_sk','MX_Shadow_CBA_sk','OB_Default_Skillset','OB_KHI_Outbound_sk','OB_Sales_Outbond','Plat_Shadow_CBA_sk','Platinum_Customer_sk','Prior_Shadow_CBA_sk','Priority_Customer_sk','SIT_sk','U_Main_sk','Urd_Shadow_CBA_sk')) as KHI_AGENT_IN_SERVICE FROM dbo.Skillset_Moving where Skill_ID IN('ALFA','Alfa_Shadow_CBA_sk','CBA_Error_sk','CBA_MX_sk','CBAKHI_Error_sk','E_Main_sk','Eng_Shadow_CBA_sk','Karachi_sk','KHI_E_Bank_Acc_sk','KHI_E_Crd_Card_sk','KHI_E_Dgt_Bank_sk','KHI_E_Isl_Bank_sk','KHI_E_Lost_Stln_sk','KHI_E_P_Con_Bank_sk','KHI_E_P_Isl_Bank_sk','KHI_E_SelfServ_Err_sk','KHI_E_SelfServ_Nrm_sk','KHI_IVR_ByPass','KHI_Lahore_OOS','KHI_U_Bank_Acc_sk','KHI_U_Crd_Card_sk','KHI_U_Dgt_Bank_sk','KHI_U_Isl_Bank_sk','KHI_U_Lost_Stln_sk','KHI_U_P_Con_Bank_sk','KHI_U_P_Isl_Bank_sk','KHI_U_SelfServ_Err_sk','KHI_U_SelfServ_Nrm_sk','MX_Customer_sk','MX_Shadow_CBA_sk','OB_Default_Skillset','OB_KHI_Outbound_sk','OB_Sales_Outbond','Plat_Shadow_CBA_sk','Platinum_Customer_sk','Prior_Shadow_CBA_sk','Priority_Customer_sk','SIT_sk','U_Main_sk','Urd_Shadow_CBA_sk')");
-        console.log(tableKHI.recordsets[0]);
+        let tableKHI = await pool.request().query("select sum(TOT_CALL_ANS) as KHI_ANSWERED, sum(CALL_OFFERED) as KHI_OFFERED, (SELECT TOP 1 AGENT_IN_SERVICE FROM dbo.Skillset_ITD where Skill_ID IN('E_Main_sk','KHI_E_Bank_Acc_sk','KHI_E_Crd_Card_sk','KHI_E_Dgt_Bank_sk','KHI_E_Isl_Bank_sk','KHI_E_Lost_Stln_sk','KHI_E_P_Con_Bank_sk','KHI_E_SelfServ_Err_sk','KHI_E_SelfServ_Nrm_sk','KHI_U_Bank_Acc_sk','KHI_U_Crd_Card_sk','KHI_U_Dgt_Bank_sk','KHI_U_Isl_Bank_sk','KHI_U_Lost_Stln_sk','KHI_U_P_Isl_Bank_sk','KHI_U_SelfServ_Err_sk','SIT_sk','U_Main_sk','MX_Customer_sk','Platinum_Customer_sk','Priority_Customer_sk','ALFA')) as KHI_AGENT_IN_SERVICE FROM dbo.Skillset_ITD where Skill_ID IN('E_Main_sk','KHI_E_Bank_Acc_sk','KHI_E_Crd_Card_sk','KHI_E_Dgt_Bank_sk','KHI_E_Isl_Bank_sk','KHI_E_Lost_Stln_sk','KHI_E_P_Con_Bank_sk','KHI_E_SelfServ_Err_sk','KHI_E_SelfServ_Nrm_sk','KHI_U_Bank_Acc_sk','KHI_U_Crd_Card_sk','KHI_U_Dgt_Bank_sk','KHI_U_Isl_Bank_sk','KHI_U_Lost_Stln_sk','KHI_U_P_Isl_Bank_sk','KHI_U_SelfServ_Err_sk','SIT_sk','U_Main_sk','MX_Customer_sk','Platinum_Customer_sk','Priority_Customer_sk','ALFA')");
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -379,8 +366,7 @@ async function getTableKHI() {
 async function getTableLHR() {
     try {
         let pool = await sql.connect(config);
-        let tableLHR = await pool.request().query("select sum(QUEUED_CALL_ANS) as LHR_ANSWERED, sum(CALL_OFFERED) as LHR_OFFERED, (SELECT TOP 1 AGENT_IN_SERVICE FROM dbo.Skillset_Moving where Skill_ID IN('Lahore_sk','LHR_E_Bank_Acc_sk','LHR_E_Crd_Card_sk','LHR_E_Dgt_Bank_sk','LHR_E_Isl_Bank_sk','LHR_E_Lost_Stln_sk','LHR_E_P_Con_Bank_sk','LHR_E_P_Isl_Bank_sk','LHR_E_SelfServ_Err_sk','LHR_E_SelfServ_Nrm_sk','LHR_IVR_ByPass','LHR_Karachi_OOS','LHR_U_Bank_Acc_sk','LHR_U_Crd_Card_sk','LHR_U_Dgt_Bank_sk','LHR_U_Isl_Bank_sk','LHR_U_Lost_Stln_sk','LHR_U_P_Con_Bank_sk','LHR_U_P_Isl_Bank_sk','LHR_U_SelfServ_Err_sk','LHR_U_SelfServ_Nrm_sk')) as LHR_AGENT_IN_SERVICE FROM dbo.Skillset_Moving where Skill_ID IN('Lahore_sk','LHR_E_Bank_Acc_sk','LHR_E_Crd_Card_sk','LHR_E_Dgt_Bank_sk','LHR_E_Isl_Bank_sk','LHR_E_Lost_Stln_sk','LHR_E_P_Con_Bank_sk','LHR_E_P_Isl_Bank_sk','LHR_E_SelfServ_Err_sk','LHR_E_SelfServ_Nrm_sk','LHR_IVR_ByPass','LHR_Karachi_OOS','LHR_U_Bank_Acc_sk','LHR_U_Crd_Card_sk','LHR_U_Dgt_Bank_sk','LHR_U_Isl_Bank_sk','LHR_U_Lost_Stln_sk','LHR_U_P_Con_Bank_sk','LHR_U_P_Isl_Bank_sk','LHR_U_SelfServ_Err_sk','LHR_U_SelfServ_Nrm_sk')");
-        console.log(tableLHR.recordsets[0]);
+        let tableLHR = await pool.request().query("select sum(TOT_CALL_ANS) as LHR_ANSWERED, sum(CALL_OFFERED) as LHR_OFFERED, (SELECT TOP 1 AGENT_IN_SERVICE FROM dbo.Skillset_ITD where Skill_ID IN('LHR_E_Bank_Acc_sk','LHR_E_Crd_Card_sk','LHR_E_Dgt_Bank_sk','LHR_E_Isl_Bank_sk','LHR_E_Lost_Stln_sk','LHR_E_P_Con_Bank_sk','LHR_E_SelfServ_Err_sk','LHR_U_Bank_Acc_sk','LHR_U_Crd_Card_sk','LHR_U_Dgt_Bank_sk','LHR_U_Isl_Bank_sk','LHR_U_Lost_Stln_sk','LHR_U_P_Con_Bank_sk','LHR_U_SelfServ_Err_sk')) as LHR_AGENT_IN_SERVICE FROM dbo.Skillset_ITD where Skill_ID IN('LHR_E_Bank_Acc_sk','LHR_E_Crd_Card_sk','LHR_E_Dgt_Bank_sk','LHR_E_Isl_Bank_sk','LHR_E_Lost_Stln_sk','LHR_E_P_Con_Bank_sk','LHR_E_SelfServ_Err_sk','LHR_U_Bank_Acc_sk','LHR_U_Crd_Card_sk','LHR_U_Dgt_Bank_sk','LHR_U_Isl_Bank_sk','LHR_U_Lost_Stln_sk','LHR_U_P_Con_Bank_sk','LHR_U_SelfServ_Err_sk')");
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -403,7 +389,6 @@ async function getliloData() {
     try {
         let pool = await sql.connect(config);
         let Agentloli = await pool.request().query("select * from vw_loli_agents order by Timestamp DESC");
-        // console.log(Agentloli.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -427,7 +412,6 @@ async function getMTDSL() {
     try {
         let pool = await sql.connect(config);
         let MTDSL_DATA = await pool.request().query("exec sp_MTDSL");
-        console.log(MTDSL_DATA.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -451,7 +435,6 @@ async function getAHT() {
     try {
         let pool = await sql.connect(config);
         let AHT_DATA = await pool.request().query("SELECT * from AHT");
-        console.log(AHT_DATA.recordsets[0]);
         var web_response = {
             message: 'You have successfully executed the query',
             status: true,
@@ -472,11 +455,15 @@ async function getAHT() {
 
 
 module.exports = {
+
+    //admin portal apis
     getAllUser: getAllUser,
     createUser: createUser,
     loginUser: loginUser,
     getDeleteUser: getDeleteUser,
     updateUser: updateUser,
+
+
     getWaitCall: getWaitCall,
     getMainScreenStatsV1: getMainScreenStatsV1,
     getMainScreenStatsV2, getMainScreenStatsV2,
